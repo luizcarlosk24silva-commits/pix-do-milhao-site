@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout - Pix do Milhão</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/checkout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body class="checkout-body">
+  <div class="checkout-container">
+    <!-- Header -->
+    <header class="checkout-header">
+      <button class="back-button" onclick="window.location.href='index.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      
+      <div class="checkout-logos">
+        <div class="logo-item">
+          <span class="logo-text">PIX DO</span>
+          <span class="logo-text">MILHÃO</span>
+        </div>
+        <div class="logo-separator"></div>
+        <div class="logo-item">
+          <span class="logo-text">EBOOK</span>
+          <span class="logo-text">DO MILHÃO</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Progress Stepper -->
+    <div class="progress-stepper">
+      <div class="step completed">
+        <div class="step-circle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <div class="step-label">
+          <span class="step-title">Escolher</span>
+          <span class="step-subtitle">Produto</span>
+        </div>
+      </div>
+
+      <div class="step-connector completed"></div>
+
+      <div class="step active">
+        <div class="step-circle">2</div>
+        <div class="step-label">
+          <span class="step-title">Dados</span>
+          <span class="step-subtitle">Pessoais</span>
+        </div>
+      </div>
+
+      <div class="step-connector"></div>
+
+      <div class="step">
+        <div class="step-circle">3</div>
+        <div class="step-label">
+          <span class="step-title">Pagamento</span>
+          <span class="step-subtitle"></span>
+        </div>
+      </div>
+
+      <div class="step-connector"></div>
+
+      <div class="step">
+        <div class="step-circle">4</div>
+        <div class="step-label">
+          <span class="step-title">Confirmação</span>
+          <span class="step-subtitle"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Purchase Summary -->
+    <section class="purchase-summary">
+      <h3>Resumo da Compra</h3>
+      <div class="summary-item">
+        <span id="quantityText">10 Ebooks/Números</span>
+        <span id="priceText">R$ 19,99</span>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="checkout-main">
+      <!-- Personal Information Form -->
+      <section class="personal-info-section">
+        <h2 class="section-title">Informações pessoais</h2>
+        
+        <form class="personal-info-form" id="personalInfoForm">
+          <div class="form-group">
+            <input type="text" id="cpf" name="cpf" placeholder="CPF" class="form-input" required>
+            <span class="form-error" id="cpfError"></span>
+          </div>
+
+          <div class="form-group">
+            <input type="text" id="fullName" name="fullName" placeholder="Nome Completo" class="form-input" required>
+            <span class="form-error" id="fullNameError"></span>
+          </div>
+
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder="Email" class="form-input" required>
+            <span class="form-error" id="emailError"></span>
+          </div>
+
+          <div class="form-group">
+            <input type="tel" id="phone" name="phone" placeholder="Celular" class="form-input" required>
+            <span class="form-error" id="phoneError"></span>
+          </div>
+
+          <div class="form-group">
+            <input type="text" id="birthDate" name="birthDate" placeholder="Data de Nascimento" class="form-input" required>
+            <span class="form-error" id="birthDateError"></span>
+          </div>
+        </form>
+      </section>
+
+      <!-- Special Offer -->
+      <section class="special-offer">
+        <div class="offer-banner">
+          <div class="offer-badge">69% OFF</div>
+          <div class="offer-text">Aumente suas chances 🔥</div>
+        </div>
+        
+        <div class="offer-checkbox-container">
+          <label class="offer-checkbox-label">
+            <input type="checkbox" id="specialOffer" class="offer-checkbox">
+            <span class="checkbox-custom"></span>
+            <span class="offer-description">
+              Compre e ganhe 10 e-books/títulos por apenas R$ 14,99 e ainda receba +5 giros na roleta
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Security Badge -->
+      <div class="security-badge">
+        <div class="security-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <div class="security-text">
+          <span class="security-title">Sucesso!</span>
+          <div class="security-provider">
+            <span class="cloudflare-text">CLOUDFLARE</span>
+            <span class="security-subtitle">Protegido & Seguro</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer with Total and Button -->
+    <footer class="checkout-footer">
+      <div class="total-section">
+        <span class="total-label">Valor total:</span>
+        <span class="total-value" id="totalValue">R$ 19,99</span>
+      </div>
+      
+      <button class="generate-pix-btn" id="generatePixBtn">
+        Gerar Pix
+      </button>
+    </footer>
+  </div>
+
+  <!-- Inline JavaScript to avoid external script blocking -->
+  <script>
+    // Inline Checkout JavaScript - Embedded directly in HTML to avoid blocking
+    (function() {
+      'use strict';
+      
+      // AnubisPay configuration
+      const ANUBIS_CONFIG = {
+        apiUrl: 'https://api.anubispay.com.br/v1/transactions',
+        publicKey: 'pk_dgXXYcDC73hm30OGQjjWLyPer3cfmiP1239MJ-xnAcvXYIs',
+        secretKey: 'sk_Zl9t9_F2xJwX0Biu4NvBXawZk35KR4bbA54Tl3EaFRh42oOd'
+      };
+
+      // Checkout Manager
+      class CheckoutManager {
+        constructor() {
+          this.baseTotal = 19.99; // Default value
+          this.specialOfferPrice = 14.99;
+          this.elements = {};
+          this.purchaseData = null;
+        }
+
+        init() {
+          console.log("Initializing inline checkout...");
+          this.loadPurchaseData();
+          this.bindElements();
+          this.bindEvents();
+          this.setupInputMasks();
+          this.updateTotal();
+          this.updatePurchaseSummary();
+        }
+
+        loadPurchaseData() {
+          const savedData = localStorage.getItem("purchaseData");
+          console.log("Raw localStorage data:", savedData);
+
+          if (savedData) {
+            try {
+              this.purchaseData = JSON.parse(savedData);
+              console.log("Parsed purchase data:", this.purchaseData);
+
+              if (this.purchaseData && this.purchaseData.priceInfo) {
+                this.baseTotal = this.purchaseData.priceInfo.price;
+                console.log("Base total set to:", this.baseTotal);
+              }
+            } catch (error) {
+              console.error("Error parsing purchase data:", error);
+              this.purchaseData = null;
+            }
+          }
+
+          if (!this.purchaseData) {
+            console.warn("No purchase data found, using defaults");
+            this.purchaseData = {
+              quantity: 10,
+              priceInfo: { price: 19.99, original: 49.90 },
+            };
+            this.baseTotal = 19.99;
+          }
+        }
+
+        updatePurchaseSummary() {
+          const quantityText = document.getElementById("quantityText");
+          const priceText = document.getElementById("priceText");
+
+          if (quantityText && this.purchaseData) {
+            quantityText.textContent = `${this.purchaseData.quantity} Ebooks/Números`;
+          }
+
+          if (priceText && this.purchaseData) {
+            priceText.textContent = `R$ ${this.purchaseData.priceInfo.price
+              .toFixed(2)
+              .replace(".", ",")}`;
+          }
+        }
+
+        bindElements() {
+          this.elements = {
+            cpf: document.getElementById("cpf"),
+            fullName: document.getElementById("fullName"),
+            email: document.getElementById("email"),
+            phone: document.getElementById("phone"),
+            birthDate: document.getElementById("birthDate"),
+            specialOffer: document.getElementById("specialOffer"),
+            totalValue: document.getElementById("totalValue"),
+            generatePixBtn: document.getElementById("generatePixBtn"),
+            quantityText: document.getElementById("quantityText"),
+            priceText: document.getElementById("priceText"),
+          };
+
+          const foundElements = Object.keys(this.elements).filter(
+            (key) => this.elements[key] !== null
+          );
+          console.log("Elements bound:", foundElements);
+        }
+
+        bindEvents() {
+          // Special offer checkbox
+          if (this.elements.specialOffer) {
+            this.elements.specialOffer.addEventListener("change", () => {
+              this.updateTotal();
+            });
+          }
+
+          // Generate PIX button
+          if (this.elements.generatePixBtn) {
+            this.elements.generatePixBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              this.handleGeneratePix();
+            });
+          }
+
+          // Form validation on input
+          Object.values(this.elements).forEach((element) => {
+            if (element && element.tagName === "INPUT") {
+              element.addEventListener("blur", () => {
+                this.validateField(element);
+              });
+            }
+          });
+        }
+
+        setupInputMasks() {
+          // CPF mask
+          if (this.elements.cpf) {
+            this.elements.cpf.addEventListener("input", (e) => {
+              let value = e.target.value.replace(/\D/g, "");
+              value = value.replace(/(\d{3})(\d)/, "$1.$2");
+              value = value.replace(/(\d{3})(\d)/, "$1.$2");
+              value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+              e.target.value = value;
+            });
+          }
+
+          // Phone mask
+          if (this.elements.phone) {
+            this.elements.phone.addEventListener("input", (e) => {
+              let value = e.target.value.replace(/\D/g, "");
+              if (value.length <= 10) {
+                value = value.replace(/(\d{2})(\d)/, "($1) $2");
+                value = value.replace(/(\d{4})(\d)/, "$1-$2");
+              } else {
+                value = value.replace(/(\d{2})(\d)/, "($1) $2");
+                value = value.replace(/(\d{5})(\d)/, "$1-$2");
+              }
+              e.target.value = value;
+            });
+          }
+
+          // Birth date mask
+          if (this.elements.birthDate) {
+            this.elements.birthDate.addEventListener("input", (e) => {
+              let value = e.target.value.replace(/\D/g, "");
+              value = value.replace(/(\d{2})(\d)/, "$1/$2");
+              value = value.replace(/(\d{2})(\d)/, "$1/$2");
+              e.target.value = value;
+            });
+          }
+        }
+
+        updateTotal() {
+          let total = this.baseTotal;
+
+          if (this.elements.specialOffer && this.elements.specialOffer.checked) {
+            total += this.specialOfferPrice;
+          }
+
+          if (this.elements.totalValue) {
+            this.elements.totalValue.textContent = `R$ ${total
+              .toFixed(2)
+              .replace(".", ",")}`;
+            console.log("Total updated to:", total);
+          }
+        }
+
+        validateField(field) {
+          const value = field.value.trim();
+          let isValid = true;
+          let errorMessage = "";
+
+          switch (field.id) {
+            case "cpf":
+              isValid = this.isValidCPF(value);
+              errorMessage = "CPF inválido";
+              break;
+            case "fullName":
+              isValid = value.length >= 3;
+              errorMessage = "Nome deve ter pelo menos 3 caracteres";
+              break;
+            case "email":
+              isValid = this.isValidEmail(value);
+              errorMessage = "Email inválido";
+              break;
+            case "phone":
+              isValid = value.replace(/\D/g, "").length >= 10;
+              errorMessage = "Telefone deve ter pelo menos 10 dígitos";
+              break;
+            case "birthDate":
+              isValid = this.isValidDate(value);
+              errorMessage = "Data inválida (DD/MM/AAAA)";
+              break;
+          }
+
+          this.showFieldValidation(field, isValid, errorMessage);
+          return isValid;
+        }
+
+        showFieldValidation(field, isValid, errorMessage) {
+          const errorElement = document.getElementById(field.id + "Error");
+
+          if (isValid) {
+            field.classList.remove("error");
+            field.classList.add("valid");
+            if (errorElement) errorElement.textContent = "";
+          } else {
+            field.classList.remove("valid");
+            field.classList.add("error");
+            if (errorElement) errorElement.textContent = errorMessage;
+          }
+        }
+
+        isValidCPF(cpf) {
+          const cleanCPF = cpf.replace(/\D/g, "");
+          return cleanCPF.length === 11 && !this.isAllSameDigits(cleanCPF);
+        }
+
+        isValidEmail(email) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return emailRegex.test(email);
+        }
+
+        isValidDate(date) {
+          const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+          if (!dateRegex.test(date)) return false;
+
+          const [day, month, year] = date.split("/").map(Number);
+          const dateObj = new Date(year, month - 1, day);
+
+          return (
+            dateObj.getDate() === day &&
+            dateObj.getMonth() === month - 1 &&
+            dateObj.getFullYear() === year &&
+            year >= 1900 &&
+            year <= new Date().getFullYear()
+          );
+        }
+
+        isAllSameDigits(str) {
+          return str.split("").every((digit) => digit === str[0]);
+        }
+
+        validateForm() {
+          const requiredFields = ["cpf", "fullName", "email", "phone", "birthDate"];
+          let isFormValid = true;
+
+          requiredFields.forEach((fieldId) => {
+            const field = this.elements[fieldId];
+            if (field) {
+              const isFieldValid = this.validateField(field);
+              if (!isFieldValid) {
+                isFormValid = false;
+              }
+            }
+          });
+
+          return isFormValid;
+        }
+
+        getFormData() {
+          return {
+            cpf: this.elements.cpf?.value.trim() || "",
+            fullName: this.elements.fullName?.value.trim() || "",
+            email: this.elements.email?.value.trim() || "",
+            phone: this.elements.phone?.value.trim() || "",
+            birthDate: this.elements.birthDate?.value.trim() || "",
+            hasSpecialOffer: this.elements.specialOffer?.checked || false,
+          };
+        }
+
+        async handleGeneratePix() {
+          console.log("Generate PIX button clicked");
+
+          // Validate form
+          if (!this.validateForm()) {
+            alert("Por favor, corrija os campos em vermelho");
+            return;
+          }
+
+          // Get form data
+          const formData = this.getFormData();
+          console.log("Form data:", formData);
+
+          // Show loading state
+          this.setLoadingState(true);
+
+          try {
+            // Calculate total amount
+            let totalAmount = this.baseTotal;
+            if (formData.hasSpecialOffer) {
+              totalAmount += this.specialOfferPrice;
+            }
+
+            // Create PIX payment
+            const result = await this.createPixPayment(formData, totalAmount);
+
+            if (result.success) {
+              // Ir direto para o modal de pagamento sem alert
+              this.showPaymentModal(result.data);
+            } else {
+              alert(`Erro ao gerar PIX: ${result.error}`);
+            }
+          } catch (error) {
+            console.error("Error generating PIX:", error);
+            alert("Erro ao gerar PIX. Tente novamente.");
+          } finally {
+            this.setLoadingState(false);
+          }
+        }
+
+        async createPixPayment(formData, totalAmount) {
+          try {
+            console.log("Creating PIX payment with total:", totalAmount);
+
+            // Prepare the payload according to AnubisPay API documentation
+            const payload = {
+              amount: Math.round(totalAmount * 100), // Convert to centavos
+              paymentMethod: 'pix',
+              items: [{
+                title: `${this.purchaseData.quantity} Ebooks`,
+                unitPrice: Math.round(totalAmount * 100), // Convert to centavos
+                quantity: 1,
+                tangible: false, // Digital product
+                externalRef: `ebook-${this.purchaseData.quantity}-${Date.now()}`
+              }],
+              customer: {
+                name: formData.fullName,
+                email: formData.email,
+                phone: formData.phone.replace(/\D/g, ''), // Remove formatting
+                document: {
+                  type: 'cpf',
+                  number: formData.cpf.replace(/\D/g, '') // Remove formatting
+                }
+              },
+              pix: {
+                expiresInDays: 1 // 1 day expiration
+              },
+              ip: '127.0.0.1', // Fallback IP
+              externalRef: `pix-${Date.now()}`,
+              metadata: 'Compra de Ebooks'
+            };
+
+            console.log('Sending payload to AnubisPay:', payload);
+
+            // Basic Authentication: public key as username, secret key as password
+            const auth = 'Basic ' + btoa(ANUBIS_CONFIG.publicKey + ':' + ANUBIS_CONFIG.secretKey);
+
+            // Make API request
+            const response = await fetch(ANUBIS_CONFIG.apiUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': auth
+              },
+              body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            console.log('AnubisPay full response:', result);
+            console.log('AnubisPay pix object:', result.pix);
+
+            if (!response.ok) {
+              throw new Error(`API Error: ${response.status} - ${JSON.stringify(result)}`);
+            }
+
+            // Extract PIX code from the result object
+            const pixCode = result.pix?.qrcode || 'PIX_CODE_NOT_AVAILABLE';
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
+
+            return {
+              success: true,
+              data: {
+                ...result,
+                pixCode: pixCode,
+                qrCodeUrl: qrCodeUrl
+              }
+            };
+
+          } catch (error) {
+            console.error('Error creating PIX payment:', error);
+            return {
+              success: false,
+              error: error.message
+            };
+          }
+        }
+
+        showPaymentModal(paymentData) {
+          const modal = this.createPaymentModal(paymentData);
+          document.body.appendChild(modal);
+          
+          // Show modal
+          setTimeout(() => {
+            modal.style.opacity = '1';
+            modal.querySelector('.payment-modal-content').style.transform = 'translateY(0)';
+          }, 100);
+        }
+
+        createPaymentModal(paymentData) {
+          const modal = document.createElement('div');
+          modal.className = 'payment-modal';
+          modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+          `;
+
+          const content = document.createElement('div');
+          content.className = 'payment-modal-content';
+          content.style.cssText = `
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(50px);
+            transition: transform 0.3s ease;
+            color: #fff;
+            text-align: center;
+          `;
+
+          // Extract PIX data from response
+          const pixCode = paymentData.pixCode || 'PIX_CODE_NOT_AVAILABLE';
+          const qrCodeUrl = paymentData.qrCodeUrl || '';
+          const amount = paymentData.amount ? (paymentData.amount / 100).toFixed(2) : '0.00';
+
+          content.innerHTML = `
+            <div style="margin-bottom: 20px;">
+              <h2 style="color: #FFD400; margin-bottom: 10px;">🎉 PIX Gerado com Sucesso!</h2>
+              <p style="color: #ccc; margin-bottom: 20px;">Escaneie o QR Code ou copie o código PIX para realizar o pagamento</p>
+            </div>
+
+            ${qrCodeUrl ? `
+              <div style="margin-bottom: 20px;">
+                <img src="${qrCodeUrl}" alt="QR Code PIX" style="max-width: 200px; border-radius: 8px;">
+              </div>
+            ` : ''}
+
+            <div style="margin-bottom: 20px;">
+              <p style="color: #FFD400; font-weight: bold; margin-bottom: 10px;">Valor: R$ ${amount.replace('.', ',')}</p>
+              <p style="color: #ccc; font-size: 14px; margin-bottom: 15px;">Código PIX:</p>
+              <div style="background: #333; padding: 15px; border-radius: 8px; margin-bottom: 15px; word-break: break-all; font-family: monospace; font-size: 12px;">
+                ${pixCode}
+              </div>
+              <button onclick="navigator.clipboard.writeText('${pixCode}')" style="
+                background: #FFD400;
+                color: #1a1a1a;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 6px;
+                font-weight: bold;
+                cursor: pointer;
+                margin-right: 10px;
+              ">📋 Copiar Código</button>
+            </div>
+
+            <div style="margin-bottom: 20px; padding: 15px; background: #2a2a2a; border-radius: 8px;">
+              <p style="color: #FFD400; font-weight: bold; margin-bottom: 10px;">⏰ Instruções:</p>
+              <ul style="text-align: left; color: #ccc; font-size: 14px; line-height: 1.6;">
+                <li>Abra o app do seu banco</li>
+                <li>Escolha a opção PIX</li>
+                <li>Escaneie o QR Code ou cole o código</li>
+                <li>Confirme o pagamento</li>
+                <li>Aguarde a confirmação (até 2 minutos)</li>
+              </ul>
+            </div>
+
+            <button onclick="this.closest('.payment-modal').remove()" style="
+              background: #666;
+              color: #fff;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 6px;
+              cursor: pointer;
+              font-weight: bold;
+            ">Fechar</button>
+          `;
+
+          modal.appendChild(content);
+          return modal;
+        }
+
+        setLoadingState(isLoading) {
+          const button = this.elements.generatePixBtn;
+          if (!button) return;
+
+          if (isLoading) {
+            button.disabled = true;
+            button.innerHTML = `
+              <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <div style="
+                  width: 16px;
+                  height: 16px;
+                  border: 2px solid #1a1a1a;
+                  border-top: 2px solid transparent;
+                  border-radius: 50%;
+                  animation: spin 1s linear infinite;
+                "></div>
+                Processando...
+              </div>
+            `;
+            button.style.opacity = "0.8";
+            
+            // Add spin animation if not exists
+            if (!document.querySelector('#spin-animation')) {
+              const style = document.createElement('style');
+              style.id = 'spin-animation';
+              style.textContent = `
+                @keyframes spin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+              `;
+              document.head.appendChild(style);
+            }
+          } else {
+            button.disabled = false;
+            button.innerHTML = "Gerar Pix";
+            button.style.opacity = "";
+          }
+        }
+      }
+
+      // Initialize when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          const checkoutManager = new CheckoutManager();
+          checkoutManager.init();
+        });
+      } else {
+        const checkoutManager = new CheckoutManager();
+        checkoutManager.init();
+      }
+
+    })();
+  </script>
+</body>
+</html>
+
